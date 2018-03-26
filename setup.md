@@ -13,7 +13,7 @@ Before arriving for the course, if you can, it is strongly recommended to get a 
 1. Get a general Compute Canada account
 2. Get a Compute Canada Cloud account
 
-To get a Compute Canada account you need to either be a faculty member or librarian at a recognized academic institution in Canada or be know someone who is that can sponsor your Compute Canada account. To get a Compute Canada account follow the instructions provided on this [Compute Canada page](https://www.computecanada.ca/research-portal/account-management/apply-for-an-account/). Once you have a CC account, you then apply for a cloud account [here](https://www.computecanada.ca/research-portal/national-services/compute-canada-cloud/create-a-cloud-account/). You will need to provide your CC account user name and an email associated with your CC account.
+To get a Compute Canada account you need to either be a faculty member or librarian at a recognized academic institution in Canada or have your account sponsored by someone who is. To get a Compute Canada account follow the instructions provided on this [Compute Canada page](https://www.computecanada.ca/research-portal/account-management/apply-for-an-account/). Once you have a CC account, you then apply for a cloud account [here](https://www.computecanada.ca/research-portal/national-services/compute-canada-cloud/create-a-cloud-account/). When applying for your cloud account you will need to provide your CC account user name and an email associated with your CC account.
 
 For those who are unable to acquire a Compute Canada Cloud account we will have guest accounts that you can use during the course, however having your own account is preferable as you may continue to use it after the course has completed.
 
