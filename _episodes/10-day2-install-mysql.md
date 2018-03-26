@@ -1,7 +1,7 @@
 ---
 layout: episode
 title: "Installing MySQL"
-teaching: 40
+teaching: 50
 exercises: 0
 questions:
 - "What is MySQL?"

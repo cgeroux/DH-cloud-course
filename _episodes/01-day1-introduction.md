@@ -15,7 +15,7 @@ objectives:
 - "Ensure everyone has their environments setup."
 
 start: true
-start_time: 615
+start_time: 780
 ---
 
 Lets get to know each other starting with introductions and a brief background about your self. Tell use why you are interested in this course and what you hope to get out of it.
