@@ -7,26 +7,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <!--
-      {% comment %} Select what logo to display. {% endcomment %}
-      {% if page.carpentry == "swc" %}
-      <a href="{{ site.swc_site }}" class="pull-left">
-        <img class="navbar-logo" src="{{ page.root }}/assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      
+      <a href="{{ site.an_site }}" class="pull-left">
+        <img class="navbar-logo" src="{{ page.root }}/assets/img/an-logo.svg" alt="ACENET logo" />
       </a>
-      {% elsif page.carpentry == "dc" %}
-      <a href="{{ site.dc_site }}" class="pull-left">
-        <img class="navbar-logo" src="{{ page.root }}/assets/img/dc-icon-black.svg" alt="Data Carpentry logo" />
+      <a href="{{ site.cc_site }}" class="pull-left">
+        <img class="navbar-logo" src="{{ page.root }}/assets/img/cc-logo.svg" alt="ComputeCanada logo" />
       </a>
-      {% elsif site.carpentry == "swc" %}
-      <a href="{{ site.swc_site }}" class="pull-left">
-        <img class="navbar-logo" src="{{ page.root }}/assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
-      </a>
-      {% elsif site.carpentry == "dc" %}
-      <a href="{{ site.dc_site }}" class="pull-left">
-        <img class="navbar-logo" src="{{ page.root }}/assets/img/dc-icon-black.svg" alt="Data Carpentry logo" />
-      </a>
-      {% endif %}
-      -->
+      
       {% comment %} Always show link to home page. {% endcomment %}
       <a class="navbar-brand" href="{{ page.root }}/">Home</a>
 
@@ -46,14 +34,6 @@
           <ul class="dropdown-menu">
             {% for episode in site.episodes %}
             <li><a href="{{ page.root }}{{ episode.url }}">{{ episode.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="{{ page.root }}/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            {% for project in site.projects %}
-            <li><a href="{{ page.root }}{{ project.url }}">{{ project.title }}</a></li>
             {% endfor %}
           </ul>
         </li>
