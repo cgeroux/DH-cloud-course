@@ -81,7 +81,8 @@ episode_order:
   - bash-cloud-init
   - yaml-syntax
   - wo-cloud-init
-  - heat
+  - using-hots
+  - creating-hots
   - break
   - lunch
   
