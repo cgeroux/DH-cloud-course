@@ -26,15 +26,16 @@ The purpose of using SSL certificates is as follows:
 - use of trusted cryptographic keys ensures that the identity of the web server can be authenticated
 - since each message includes a message authentication code, the connection can ensure data integrity (ie. there has been no loss or alteration of data)
 
-There are two methods of creating SSL certificates. You can pay to purchase one that will be signed by a trusted certificate authority, such as GoDaddy, Symantec, Verizon, DigiCert, etc. Or you can create your own self-signed SSL certificate. While both types of certificates will encrypt communication between our web browsers and the WordPress server, self-signed certificates cannot be used to validate the identity of our web servers. For this reason, in production environments, it is recommended that you purchase digital certificates from a trusted certification authority. Even so, for the purposes of this course, a self-signed certificate will suffice. Self-signed certificates are still very useful for working with applications in a development, test, or educational environment (like this course, for example) -- or for any situation in which it is too cost prohibitive to purchase trusted certificates. Self-signed SSL certificates will still encrypt network traffic when users or administrators log into WordPress using password authentication in order to create and maintain content, as well as modify configuration settings. Naturally, this is communication that we *REALLY* don't want to be transmitting across the wide-open Internet in plain text.
+There are two methods of creating SSL certificates. You can create one that will be signed by a trusted certificate authority, such as GoDaddy, Symantec, Verizon, DigiCert, etc. Or you can create your own self-signed SSL certificate. Many of these authorities will charge for providing the service of signing your SSL certificates. However, there is a free service for providing 3rd party signed certificates, [letsencrypt.org](https://letsencrypt.org/), while it might not provide certificates suitable for exchanging say, banking information, it is good enough for many situations and it is free and easy.However, to create a certificate signed by a signing authority you would need a valid domain name pointing to your VM and obtaining such a domain name is beyond the scope of this course.
 
+While both self-signed and 3rd party signed certificates will encrypt communication between our web browsers and the WordPress server, self-signed certificates cannot be used to validate the identity of our web servers. For this reason, in production environments, it is recommended that you obtain digital certificates from a trusted certification authority. Self-signed certificates are still very useful for working with applications in a development, test, or educational environment (like this course, for example). Self-signed SSL certificates will still encrypt network traffic when users or administrators log into WordPress using password authentication in order to create and maintain content, as well as modify configuration settings. Naturally, this is communication that we *REALLY* don't want to be transmitting across the wide-open Internet in plain text.
 
 ## Creating the SSL certificate
 Before we can create our certificate, we need to make certain that the OpenSSL package is installed. It should already be there but, in case that it is missing, please perform the following:  
 
 ~~~
-$ apt update
-$ apt install openssl
+$ sudo apt update
+$ sudo apt install openssl
 ~~~
 {: .bash}
 
@@ -105,36 +106,45 @@ Email Address []:admin@fake.org
 And that's it. You can verify the creation of your private key as follows:
 
 ~~~
-$ $ sudo ls -l /etc/ssl/private/
+$ sudo ls -l /etc/ssl/private/
 ~~~
 {: .bash}  
 
 ~~~
--rw-r--r-- 1 root root     1708 May  4 19:45 apache-selfsigned.key
+total 8
+-rw-r--r-- 1 root root     1704 Apr 30 14:57 apache-selfsigned.key
+-rw-r----- 1 root ssl-cert 1704 Apr 30 14:11 ssl-cert-snakeoil.key
 ~~~
 {: .output}
 
 You can also verify the creation of your public SSL certificate:  
 
 ~~~
-$ ls -ltr /etc/ssl/certs/
+$ ls -l /etc/ssl/certs/
 ~~~
 {: .bash}  
 
 ~~~
 ...
-whole bunch of other certificate files ...
+other certificate files
 ...
--rw-r--r-- 1 root root   1501 May  4 19:45 apache-selfsigned.crt
+
+-rw-r--r-- 1 root root   1411 Apr 30 14:57 apache-selfsigned.crt
+
+...
+other certificate files
+...
 ~~~
 {: .output}
 
 
 ## Creating a Diffie-Hellman group
 
-At the same time, we should also create what's called a Diffie-Hellman group. What is that? Good question.  
+At the same time, we should also create what's called a Diffie-Hellman group. What is that? Good question.
 
-Diffie-Hellman groups determine the strength of the key that is used during an encryption key exchange process. There is a trade off. Higher group numbers are more secure but they require longer duration to compute the key. As a consequence, we'll create one that will match the strength of the RSA private key that we created in the previous section. Please note, this will take more than a few moments.
+When two computers start communicating to send web content, passwords, or any other data they need to exchange some information (keys), first which lets each computer involved in the communication know how the data will be encrypted and also decrypted so that they can understand each other but other computers (and possibly humans) along the public communication network being used (in our case the Internet) can not understand the information transmitted back and forth so that this information stays private between the two computers. Diffie-Hellman groups determine the strength of the key that is used during this encryption key exchange process, so that the keys which are exchanged to encrypt the data, are themselves encrypted using these Diffie-Hellman groups.
+
+When creating a Diffie-Hellman group you can choose a group number the larger the group number the stronger the encryption. However there is a trade off. Higher group numbers also require more time to compute the key. A good compromise is to choose one that matches the strength of the RSA private key that we created in the previous section, used to encrypt the data sent and received. Please note, this will take more than a few moments.
 
 ~~~
 $ sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
@@ -386,6 +396,9 @@ $ sudo systemctl status apache2
 
 And check for the line which reads `Active: active (running)...`.
 
+## Add security rule for HTTPS
+
+As for SSH (port 22) and HTTP (port 80) we must also add a security rule for HTTPS (port 443).
 
 ## Verify that encryption works
 
@@ -406,3 +419,7 @@ Click the Add Exception button. This will display the following form:
 <img src="../fig/web-screens/firefox_ssl_confirm_exception.png" alt="Firefox SSL - Confirm Exception"/>
 
 Click the Confirm Security Exception button. And, finally, you should be redirected to the encrypted version of your default webpage. Again, the reason you will be prompted (only the first time) for this much information is that your browser is trying to warn you that this SSL certificate was not issued by a trusted certificate authority. Which you already know... because you issued it yourself.
+
+> ## Automating SSL Certs
+> There is a tool that can be used with [letsencrypt.org](https://letsencrypt.org/) SSL certificate signing authority called [certbot](https://certbot.eff.org/) which can be used to create and configure your server to use an SSL certificate signed by letsencrypt.org, it greatly simplifies the steps above and it is highly recommended if you have purchased your own domain name.
+{: .callout}
